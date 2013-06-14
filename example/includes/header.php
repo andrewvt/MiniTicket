@@ -1,7 +1,4 @@
-<?php
-require_once($_SERVER["DOCUMENT_ROOT"]."/../Mini_Ticket/Mini_Ticket_Base.class.php");
-require_once($_SERVER["DOCUMENT_ROOT"]."/../Mini_Ticket.class.php");
-?>
+<?php require_once($_SERVER["DOCUMENT_ROOT"]."/../Mini_Ticket.class.php"); ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -20,6 +17,7 @@ require_once($_SERVER["DOCUMENT_ROOT"]."/../Mini_Ticket.class.php");
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link href="css/bootswatch.css" rel="stylesheet">
     <link href="css/datatables-bootstrap.css" rel="stylesheet">
+    <link href="css/mini-ticket.css" rel="stylesheet">
 
   </head>
 
@@ -68,3 +66,22 @@ require_once($_SERVER["DOCUMENT_ROOT"]."/../Mini_Ticket.class.php");
     </div>
   </div>
 </header>
+
+<!-- Modal Section -Ticket -->
+<div id="ticketform" class="reveal-modal">
+  <h3>Support Ticket</h3>
+  <p style="font-size:12px;">Your ticket is handled by our well trained staff.</p> 
+  <form >
+    <input type="text" id="ticket_subject" placeholder="Subject"/>
+    <textarea id="ticket_message" placeholder="Message"></textarea>
+    <a href="#" id="ticket_submit" class="green button radius right" style="width:96px;"><i class="icon-check"></i> Send</a>
+  </form>
+  <a class="close-reveal-modal"><i class="icon icon-remove"></i></a>
+</div>
+<!-- Modal Section -ticket -->
+
+<!-- Create Ticket Button -->
+<div id="feedback_button">
+  <a href="" data-reveal-id="ticketform" class="btn"><i class="icon icon-question-sign"></i> Create Ticket</a>
+</div>
+<!-- Create Ticket Button -->

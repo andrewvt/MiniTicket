@@ -10,7 +10,7 @@ Setup
 
 2. Import/Execute `/tools/mini_ticket.sql` on the database:
 
-3. Update database credentials in Mini_Ticket_Base.class.php function getDatabaseConnection()
+3. Update database credentials in `Mini_Ticket_Base.class.php` function getDatabaseConnection()
 
 4. Set the 'example' directory to be your document root.
 

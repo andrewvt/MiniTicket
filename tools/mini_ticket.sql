@@ -9,7 +9,7 @@
  Target Server Version : 50525
  File Encoding         : utf-8
 
- Date: 06/14/2013 06:21:39 AM
+ Date: 06/14/2013 12:56:39 PM
 */
 
 SET NAMES utf8;
@@ -35,13 +35,13 @@ CREATE TABLE `ticket` (
   `session` text,
   `time_spent` int(5) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Records of `ticket`
 -- ----------------------------
 BEGIN;
-INSERT INTO `ticket` VALUES ('1', '1', '1', 'Luke', 'Skywalker', 'luke.skywalker@gmail.com', 'Test Ticket', 'Test text for a ticket', 'open', '0', '2013-06-13 20:51:35', '2013-06-13 20:51:39', null, '0');
+INSERT INTO `ticket` VALUES ('1', '1', '1', 'Luke', 'Skywalker', 'luke.skywalker@gmail.com', 'Test Ticket', 'Test text for a ticket', 'open', '0', '2013-06-13 20:51:35', '2013-06-14 12:49:40', null, '0');
 COMMIT;
 
 -- ----------------------------
@@ -51,6 +51,7 @@ DROP TABLE IF EXISTS `ticket_comment`;
 CREATE TABLE `ticket_comment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ticket_id` int(11) NOT NULL,
+  `associated_id` int(11) DEFAULT NULL,
   `user_id` int(11) NOT NULL,
   `first_name` varchar(100) DEFAULT NULL,
   `last_name` varchar(100) DEFAULT NULL,
@@ -59,13 +60,13 @@ CREATE TABLE `ticket_comment` (
   `created_at` datetime NOT NULL,
   `is_deleted` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Records of `ticket_comment`
 -- ----------------------------
 BEGIN;
-INSERT INTO `ticket_comment` VALUES ('1', '1', '1', 'Han', 'Solo', 'han.solo@gmail.com', 'This is a comment', '2013-06-13 22:57:41', '0');
+INSERT INTO `ticket_comment` VALUES ('1', '1', '0', '1', 'Han', 'Solo', 'han.solo@gmail.com', 'This is a comment', '2013-06-13 22:57:41', '0');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

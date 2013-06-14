@@ -1,6 +1,6 @@
 <?php
 require_once($_SERVER["DOCUMENT_ROOT"]."/includes/header.php");
-$tickets = Mini_Ticket::getAllTickets();
+$tickets = Mini_Ticket::getUsersTickets($user_id=1);
 ?>
 
 <table id="tickets" style="width:80%;">

@@ -60,6 +60,55 @@ class Mini_Ticket_Base
 		return $stmt->fetchAll();
 	}
 
+	public static function newTicket($subject, $message, $status = "open", $first_name, $last_name, $email, $associated_id = 0, $user_id, $is_deleted = 0, $session = null, $time_spent = 0)
+	{
+		//create a new ticket
+		$pdo = self::getDatabaseConnection();
+		$query = "INSERT INTO ticket SET associated_id = :associated_id, user_id = :user_id, first_name  = :first_name, last_name  = :last_name, email  = :email, subject  = :subject, message  = :message, status  = :status, is_deleted  = :is_deleted, session  = :session, time_spent  = :time_spent, created_at = NOW(), updated_at = NOW() ";
+		$params = array("associated_id"  => $associated_id, "user_id"  => $user_id, "first_name"  => $first_name, "last_name"  => $last_name, "email"  => $email, "subject"  => $subject, "message"  => $message, "status"  => $status, "is_deleted"  => $is_deleted, "session"  => $session, "time_spent"  => $time_spent);
+		//error_log($query);
+		//error_log(print_r($params, true));
+		$stmt = $pdo->prepare($query);
+		$stmt->execute($params);
+	}
+
+	public static function newTicketComment($comment, $first_name, $last_name, $email, $ticket_id, $associated_id = 0, $user_id, $is_deleted = 0)
+	{
+		//create a new ticket comment
+		$pdo = self::getDatabaseConnection();
+		$query = "INSERT INTO ticket_comment SET ticket_id = :ticket_id, associated_id = :associated_id, user_id = :user_id, first_name  = :first_name, last_name  = :last_name, email  = :email, comment  = :comment, is_deleted  = :is_deleted, created_at = NOW()";
+		$params = array("ticket_id"  => $ticket_id, "associated_id"  => $associated_id, "user_id"  => $user_id, "first_name"  => $first_name, "last_name"  => $last_name, "email"  => $email, "comment"  => $comment, "is_deleted"  => $is_deleted);
+		$stmt = $pdo->prepare($query);
+		$stmt->execute($params);
+
+		//update parent ticket updated_at
+		self::updateTicket($ticket_id);
+	}
+
+	public static function updateTicketStatus($ticket_id, $status = "open")
+	{
+		//create a new ticket
+		$pdo = self::getDatabaseConnection();
+		$query = "UPDATE ticket SET status  = :status, updated_at = NOW() WHERE id = :ticket_id ";
+		$params = array("ticket_id"  => $ticket_id, "status"  => $status);
+		error_log($query);
+		error_log(print_r($params, true));
+		$stmt = $pdo->prepare($query);
+		$stmt->execute($params);
+	}
+
+	public static function updateTicket($ticket_id)
+	{
+		//create a new ticket
+		$pdo = self::getDatabaseConnection();
+		$query = "UPDATE ticket SET updated_at = NOW() WHERE id = :ticket_id ";
+		$params = array("ticket_id"  => $ticket_id);
+		error_log($query);
+		error_log(print_r($params, true));
+		$stmt = $pdo->prepare($query);
+		$stmt->execute($params);
+	}
+
 	//This generates a gravatar link
 	public static function getGravatarImage($email, $size = 80, $defaultImage = 'mm', $rating = 'G')
     {
