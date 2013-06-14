@@ -2,7 +2,7 @@
 require_once($_SERVER["DOCUMENT_ROOT"]."/includes/header.php");
 $tickets = Mini_Ticket::getAllTickets();
 ?>
-
+<h1>Admin Ticket List</h1>
 <table id="tickets" style="width:80%;">
 	<thead>
 		<tr><th></th><th>Status<i></i></th><th>User<i></i></th><th>Content<i></i></th><th>Updated<i></i></th><th>Comments<i></i></th></tr>

@@ -1,11 +1,27 @@
 <?php
 require_once($_SERVER["DOCUMENT_ROOT"]."/includes/header.php");
+
+//If comment post insert it
+if(isset($_POST['type']) AND $_POST['type']=="comment")
+{ 
+  $ticket_id = $_POST['ticket_id'];
+  $comment = $_POST['comment'];
+  $first_name = $_POST['first_name']; 
+  $last_name= $_POST['last_name']; 
+  $email = $_POST['email']; 
+  $associated_id = 1; //This would be set from your framework
+  $user_id = 1; //this would be set from your framework
+
+  Mini_Ticket::newTicketComment($comment, $first_name, $last_name, $email, $ticket_id, $associated_id, $user_id);
+}
+
+//Fetch the appropriate data
 $ticket = Mini_Ticket::getTicket($_GET['id']);
 $comments = Mini_Ticket::getTicketsComments($_GET['id']);
 ?>
 
 <h4><?= $ticket['subject']; ?></h4>
-<div><?= $ticket['first_name']; ?> <?= $ticket['last_name']; ?> | <?= date("M d", $ticket['updated_at']); ?></div>
+<div><?= $ticket['first_name']; ?> <?= $ticket['last_name']; ?> | <?= date("M d", strtotime($ticket['updated_at'])); ?></div>
 <table style="width:100%;">
   <tr>
     <td style="width:50px;"><img src="<?= Mini_Ticket::getGravatarImage($ticket['email'], 30); ?>"  alt="" style="margin-right: 5px;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;"/></td>
@@ -29,16 +45,24 @@ $comments = Mini_Ticket::getTicketsComments($_GET['id']);
         <td style="width:50px;"><img src="<?= Mini_Ticket::getGravatarImage($comment['email'], 30); ?>"  alt="" style="margin-right: 5px;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;"/></td>
         <td style="width: 90px;"><?= $comment['first_name']; ?> <?= substr($comment['last_name'], 0, 1); ?></td>
         <td><?= $comment['comment']; ?></td>
-        <td style="width:100px;"><?= date("M d", $comment['created']); ?></td>
+        <td style="width:100px;"><?= date("M d", strtotime($comment['created_at'])); ?></td>
       </tr>
     <?php endforeach; ?>
   </table>
 <?php endif; ?>
-<form>
-  <input type="hidden" id="ticket_id" value="<?= $ticket['id']; ?>"/>
+<form id="comment_form" action="" method="post">
+  <input type="hidden" name="type" value="comment"/>
+  <input type="hidden" id="ticket_id" name="ticket_id" value="<?= $ticket['id']; ?>"/>
+
+  <!-- These can be hidden if your framework knows this stuff already -->
+  <input type="text" name="first_name" value="" placeholder="First Name"/>
+  <input type="text" name="last_name" value="" placeholder="Last Name"/>
+  <input type="text" name="email" value="" placeholder="Email"/>
+  <!-- These can be hidden if your framework knows this stuff already -->
+
   <div style="width:5%;float:left;"><img src="<?= Mini_Ticket::getGravatarImage($ticket['email'], 30); ?>"  alt="" style="margin-right: 5px;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;"/></div>
-  <div style="width:95%;float:left;"><textarea id="comment" placeholder="Add a comment"></textarea></div>
-  <a href="#" id="comment_submit" class="green button radius right" style="width:160px;"><i class="icon-check"></i> Add Comment</a>
+  <div style="width:95%;float:left;"><textarea name="comment" id="comment" placeholder="Add a comment"></textarea></div>
+  <a href="#" id="comment_submit" class="green button radius right" style="width:160px;" onclick=""><i class="icon-check"></i> Add Comment</a>
 </form>
 
 <?php require_once($_SERVER["DOCUMENT_ROOT"]."/includes/footer.php"); ?>

@@ -72,6 +72,13 @@
   <h3>Support Ticket</h3>
   <p style="font-size:12px;">Your ticket is handled by our well trained staff.</p> 
   <form >
+
+    <!-- These can be hidden if your framework knows this stuff already -->
+    <input type="text" id="ticket_first_name" placeholder="First Name" value=""/>
+    <input type="text" id="ticket_last_name" placeholder="Last Name" value=""/>
+    <input type="text" id="ticket_email" placeholder="Email" value=""/>
+    <!-- These can be hidden if your framework knows this stuff already -->
+
     <input type="text" id="ticket_subject" placeholder="Subject"/>
     <textarea id="ticket_message" placeholder="Message"></textarea>
     <a href="#" id="ticket_submit" class="green button radius right" style="width:96px;"><i class="icon-check"></i> Send</a>

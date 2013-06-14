@@ -1,5 +1,6 @@
 <?php
-/*  */
+/* This is the base class for MiniTicket.  Don't change functionality here.  You can overload anything here
+   in the Mini_Ticket.class.php file for your custom application. */
 
 class Mini_Ticket_Base
 {
@@ -26,7 +27,6 @@ class Mini_Ticket_Base
 					FROM ticket t 
 					WHERE t.is_deleted=0
 					ORDER BY t.updated_at DESC";
-		//$params = array("param1"  => $user_id);
 		$stmt = $pdo->prepare($query);
 		$stmt->execute();
 
@@ -43,7 +43,7 @@ class Mini_Ticket_Base
 		$stmt = $pdo->prepare($query);
 		$stmt->execute($params);
 
-		return $stmt->fetchAll();
+		return $stmt->fetch();
 	}
 
 	//This returns an array of all comments for a single ticket
@@ -66,8 +66,6 @@ class Mini_Ticket_Base
 		$pdo = self::getDatabaseConnection();
 		$query = "INSERT INTO ticket SET associated_id = :associated_id, user_id = :user_id, first_name  = :first_name, last_name  = :last_name, email  = :email, subject  = :subject, message  = :message, status  = :status, is_deleted  = :is_deleted, session  = :session, time_spent  = :time_spent, created_at = NOW(), updated_at = NOW() ";
 		$params = array("associated_id"  => $associated_id, "user_id"  => $user_id, "first_name"  => $first_name, "last_name"  => $last_name, "email"  => $email, "subject"  => $subject, "message"  => $message, "status"  => $status, "is_deleted"  => $is_deleted, "session"  => $session, "time_spent"  => $time_spent);
-		//error_log($query);
-		//error_log(print_r($params, true));
 		$stmt = $pdo->prepare($query);
 		$stmt->execute($params);
 	}
@@ -103,8 +101,6 @@ class Mini_Ticket_Base
 		$pdo = self::getDatabaseConnection();
 		$query = "UPDATE ticket SET updated_at = NOW() WHERE id = :ticket_id ";
 		$params = array("ticket_id"  => $ticket_id);
-		error_log($query);
-		error_log(print_r($params, true));
 		$stmt = $pdo->prepare($query);
 		$stmt->execute($params);
 	}
@@ -119,7 +115,7 @@ class Mini_Ticket_Base
     public static function getDatabaseConnection()
     {
         $host = 'localhost';
-	    $dbname = 'ticket';
+	    $dbname = 'mini_ticket';
 	    $user = 'root';
 	    $pass = 'root';
 
