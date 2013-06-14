@@ -1,7 +1,7 @@
 <?php
 /*  */
 
-class Mini_Ticket
+class Mini_Ticket_Base
 {
     //This returns an array of a users tickets
 	public static function getUsersTickets($user_id) 
