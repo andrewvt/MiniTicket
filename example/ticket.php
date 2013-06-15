@@ -4,15 +4,17 @@ require_once($_SERVER["DOCUMENT_ROOT"]."/includes/header.php");
 //If comment post insert it
 if(isset($_POST['type']) AND $_POST['type']=="comment")
 { 
-  $ticket_id = $_POST['ticket_id'];
-  $comment = $_POST['comment'];
-  $first_name = $_POST['first_name']; 
-  $last_name= $_POST['last_name']; 
-  $email = $_POST['email']; 
+  $ticket_id = strip_tags($_POST['ticket_id']);
+  $comment = strip_tags($_POST['comment']);
+  $first_name = strip_tags($_POST['first_name']); //this could come from a logged in user instead
+  $last_name= strip_tags($_POST['last_name']); //this could come from a logged in user instead
+  $email = strip_tags($_POST['email']); //this could come from a logged in user instead
   $associated_id = 1; //This would be set from your framework
   $user_id = 1; //this would be set from your framework
 
   Mini_Ticket::newTicketComment($comment, $first_name, $last_name, $email, $ticket_id, $associated_id, $user_id);
+
+  //Email notification goes here...
 }
 
 //Fetch the appropriate data
@@ -30,8 +32,8 @@ $comments = Mini_Ticket::getTicketsComments($_GET['id']);
         Change Status:<br/>
         <input type="hidden" id="ticket_id" value="<?= $ticket['id']; ?>"/>
         <select class="update_status">
-          <option value="open" >open</option>
-          <option value="closed" >closed</option>
+          <option value="open" <?= ($ticket['status'] == 'open') ? 'SELECTED' : ''; ?> >open</option>
+          <option value="closed" <?= ($ticket['status'] == 'closed') ? 'SELECTED' : ''; ?> >closed</option>
         </select>
       </td>
   </tr>
