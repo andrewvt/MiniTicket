@@ -85,7 +85,7 @@ class Mini_Ticket_Base
 
 	public static function updateTicketStatus($ticket_id, $status = "open")
 	{
-		//create a new ticket
+		//update the status of the ticket
 		$pdo = self::getDatabaseConnection();
 		$query = "UPDATE ticket SET status  = :status, updated_at = NOW() WHERE id = :ticket_id ";
 		$params = array("ticket_id"  => $ticket_id, "status"  => $status);
@@ -97,7 +97,7 @@ class Mini_Ticket_Base
 
 	public static function updateTicket($ticket_id)
 	{
-		//create a new ticket
+		//sets updated_at to right now
 		$pdo = self::getDatabaseConnection();
 		$query = "UPDATE ticket SET updated_at = NOW() WHERE id = :ticket_id ";
 		$params = array("ticket_id"  => $ticket_id);
@@ -107,23 +107,22 @@ class Mini_Ticket_Base
 
 	//This generates a gravatar link
 	public static function getGravatarImage($email, $size = 80, $defaultImage = 'mm', $rating = 'G')
-    {
-        return  $grav_url = "http://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . $defaultImage . "&s=" . $size . '&r=' . $rating;
-    }
+	{
+	        return  $grav_url = "http://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . $defaultImage . "&s=" . $size . '&r=' . $rating;
+	}
 
-	//http://stackoverflow.com/questions/13240500/creating-a-database-connection-class-pdo-and-fetch-data
-    public static function getDatabaseConnection()
-    {
-        $host = 'localhost';
-	    $dbname = 'mini_ticket';
-	    $user = 'root';
-	    $pass = 'root';
-
-        $pdo = new PDO("mysql:host=".$host.";dbname=".$dbname."", $user, $pass);
-        $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        // always disable emulated prepared statement when using the MySQL driver
-        $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-
-        return $pdo;
-    }
+	public static function getDatabaseConnection()
+	{
+	        $host = 'localhost';
+		$dbname = 'mini_ticket';
+		$user = 'root';
+		$pass = 'root';
+	
+	        $pdo = new PDO("mysql:host=".$host.";dbname=".$dbname."", $user, $pass);
+	        $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	        // always disable emulated prepared statement when using the MySQL driver
+	        $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+	
+	        return $pdo;
+	}
 }
