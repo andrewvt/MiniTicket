@@ -14,7 +14,7 @@ $tickets = Mini_Ticket::getAllTickets();
 			<td><?= $ticket['status']; ?></td>
 			<td><?= $ticket['first_name']; ?> <?= substr($ticket['last_name'], 0, 1); ?>.</td>
 			<td><a href="ticket.php?id=<?= $ticket['id']; ?>"><?= $ticket['subject']; ?></a> - <?= substr($ticket['message'], 0, 200); ?></td>
-			<td><?= date("M d", $ticket['updated_at']); ?></td>
+			<td><?= date("M d", strtotime($ticket['updated_at'])); ?></td>
 			<td><a href="ticket.php?id=<?= $ticket['id']; ?>"><i class="icon-comment"></i> <?= $ticket['count']; ?></a></td>
 		</tr>
 		<?php endforeach; ?>
