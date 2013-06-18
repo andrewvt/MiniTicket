@@ -5,14 +5,17 @@
 class Mini_Ticket_Base
 {
     //This returns an array of a users tickets
-	public static function getUsersTickets($user_id) 
+	public static function getUsersTickets($user_id, $associated_id = null) 
 	{
 		$pdo = self::getDatabaseConnection();
+		$associated_where = "";
+		if($associated_id) $associated_where = " AND associated_id = :associated_id";
 		$query = "SELECT t.*, (SELECT count(tc.id) FROM ticket_comment tc WHERE tc.ticket_id = t.id) AS count 
 					FROM ticket t 
-					WHERE t.user_id = :param1 AND t.is_deleted=0
+					WHERE t.user_id = :user_id AND t.is_deleted=0 $associated_where
 					ORDER BY t.updated_at DESC";
-		$params = array("param1"  => $user_id);
+		$params = array("user_id"  => $user_id);
+		if($associated_id) $params = array("user_id"  => $user_id, "associated_id"  => $associated_id);
 		$stmt = $pdo->prepare($query);
 		$stmt->execute($params);
 
